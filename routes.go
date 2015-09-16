@@ -15,6 +15,12 @@ type Route struct {
 type Routes []Route
 
 var routes = Routes{
+     Route{
+        "Index",
+        "OPTIONS",
+        "/todos",
+        AllowAcces,
+    },
     Route{
         "Index",
         "GET",

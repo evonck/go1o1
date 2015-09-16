@@ -21,8 +21,8 @@ curl -X PUT -H "Content-Type: application/json" -H " -d '{"Name":"Test","State":
 ```
 Return the updated Todo
 
-* Delete
-```shell
+ * Delete
+ ```shell
 curl -X DELETE 'http://localhost:8081/todos/1'
 ```
 Return 200
