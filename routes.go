@@ -15,10 +15,16 @@ type Route struct {
 type Routes []Route
 
 var routes = Routes{
-     Route{
+    Route{
         "Index",
         "OPTIONS",
         "/todos",
+        AllowAcces,
+    },
+    Route{
+        "Index",
+        "OPTIONS",
+        "/todos/{todoId}",
         AllowAcces,
     },
     Route{

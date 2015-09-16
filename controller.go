@@ -23,6 +23,7 @@ func SetHeader(w *http.ResponseWriter){
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 	(*w).Header().Set("Content-Type", "application/json; charset=UTF-8")
 	(*w).Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS, DELETE");
 }
 func AllowAcces(w http.ResponseWriter, r *http.Request) {
 	SetHeader(&w)
@@ -91,7 +92,7 @@ func TodoUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Check the new todo Name is not null if not update
-	if !strings.EqualFold(todo.Name, "") {
+	if (!strings.EqualFold(todoUpdate.Name, "") ){
 		todo.Name = todoUpdate.Name
 	}
 	todo.State = todoUpdate.State
