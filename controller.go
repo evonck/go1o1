@@ -2,13 +2,13 @@ package main
 
 import (
 	"encoding/json"
-	"evonck/todo/Godeps/_workspace/src/github.com/gorilla/mux"
+	"github.com/gorilla/mux"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"evonck/todo/Godeps/_workspace/src/github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm"
 	"strings"
 )
 

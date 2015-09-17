@@ -1,0 +1,19 @@
+mysql:
+    image: evmysql
+    ports:
+        - "3306:3306"
+go:
+    image: todo-docker
+    ports:
+        - "8081:8081"
+    links:
+        - mysql:mysql
+    volumes:
+        - .:/srv/app/todo/src/evonck/todo
+    command: /srv/app/todo/src/evonck/todo/start.sh
+angular:
+    image: nginx
+    ports:
+        - "8080:80"
+    volumes:
+        - ./angular:/usr/share/nginx/html
