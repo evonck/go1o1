@@ -6,7 +6,7 @@ sleep 3
 #grab the godep library
 go get github.com/tools/godep
 #install the binary
-cd /go/src/evonck/todo
+cd /go/src/todo
 godep restore
 rm -r ./Godeps 
 godep save

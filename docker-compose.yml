@@ -16,8 +16,8 @@ go:
     links:
         - mysql:mysql
     volumes:
-        - .:/go/src/evonck/todo
-    command: /go/src/evonck/todo/start.sh
+        - .:/go/src/todo
+    command: /go/src/todo/start.sh
 angular:
     image: nginx
     ports:

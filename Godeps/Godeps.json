@@ -1,5 +1,5 @@
 {
-	"ImportPath": "evonck/todo",
+	"ImportPath": "todo",
 	"GoVersion": "go1.5.1",
 	"Deps": [
 		{
