@@ -14,7 +14,7 @@ angular.module('todoController', [])
 	      var cookie = cookies[i];
 	      var trimmedCookie = cookie.match(/^\s*(.*)/)[1];
 	      if (trimmedCookie.indexOf("api_override" + '=') === 0) {
-	          apiBaseUrl = trimmedCookie.substring(api_override.length + 1, trimmedCookie.length);
+	          apiBaseUrl = trimmedCookie.substring("api_override".length + 1, trimmedCookie.length);
 	          break;
 	      }
 	    }

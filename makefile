@@ -11,16 +11,17 @@ buildDocker:
 #Create the binary inside of the docker
 #mount the binary on the folder call todo
 install: buildDocker
-	@docker run --rm -v "$$PWD":"/srv/app/${SRC_ROOT}" -w "/srv/app/${SRC_ROOT}" \
-	--name dockerBuild -t todo-docker godep go build
+	@docker run --rm -v "$$PWD":"/srv/app/projet/${SRC_ROOT}" -w "/srv/app/projet${SRC_ROOT}" \
+	-t todo-docker 
 
 dockerize: install
-	@docker run --rm -v "$$PWD":"/srv/app/${SRC_ROOT}" -w "/srv/app/${SRC_ROOT}" \
-	-t todo-docker ./todo ${Mysql}
+	@docker run --rm -v "$$PWD":"/srv/app/projet/${SRC_ROOT}" -w "/srv/app/projet/${SRC_ROOT}" \
+	-t todo-docker ./todo ${MYSQL}
 
 #Create the test
 test: buildDocker
-	@docker run -i -v "$$PWD":"/srv/app/${SRC_ROOT}" -w "/srv/app/${SRC_ROOT}" \
-	-t todo-docker godep go test 
+	@docker run -i -v "$$PWD":"/srv/app/projet/${SRC_ROOT}" -w "/srv/app/projet/${SRC_ROOT}" \
+	-e MYSQL_TEST_ENV=${MYSQL_TEST_ENV} -t todo-docker godep go test -v ./...
 clean: 
+	rm -f todo
 

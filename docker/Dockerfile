@@ -15,15 +15,17 @@ RUN apt-get -y update \
 WORKDIR /srv/app/go/src
 RUN ./make.bash  
 
-ENV GOBIN /srv/app/go/bin
+ENV GOBIN /srv/app/projet/bin
 
-ENV GOPATH /srv/app
+RUn mkdir /srv/app/projet
+
+ENV GOPATH /srv/app/projet/
 
 ENV GOROOT /srv/app/go
 
-ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/srv/app/go/bin:/srv/app/todo/bin
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/srv/app/go/bin:/srv/app/projet/bin
 
 RUN go get github.com/tools/godep
 
-CMD godep go build
+CMD go get && godep save  && godep go build
 

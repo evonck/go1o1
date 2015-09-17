@@ -1,14 +1,12 @@
 #!/bin/bash
 #Update mysl create use and database
 
-#launch go
-cd /srv/app/todo/src/evonck/todo/test
-#go test
-(cd /srv/app/todo/src/evonck/todo; go get)
-
-(cd /srv/app/todo/src/evonck/todo; go install)
-cd /srv/app/todo/src/evonck/todo
-./todo 'root:@tcp(['${MYSQL_PORT_3306_TCP_ADDR}']:3306)/todo?charset=utf8&parseTime=True'
-
-
-
+#let mysql some time to create the databases
+sleep 5
+#grab the godep library
+go get github.com/tools/godep
+#install the binary
+(cd /go/src/evonck/todo; godep go install)
+cd /go/bin
+#launch or API
+./todo 'root:root@tcp(['${MYSQL_PORT_3306_TCP_ADDR}']:3306)/todo?charset=utf8&parseTime=True'

@@ -1,19 +1,11 @@
 mysql:
-    image: evmysql
+    image: mysql
     ports:
         - "3306:3306"
-go:
-    image: todo-docker
-    ports:
-        - "8081:8081"
-    links:
-        - mysql:mysql
-    volumes:
-        - .:/srv/app/todo/src/evonck/todo
-    command: /srv/app/todo/src/evonck/todo/start.sh
-angular:
-    image: nginx
-    ports:
-        - "8080:80"
-    volumes:
-        - ./angular:/usr/share/nginx/html
+    environment:
+        MYSQL_DATABASE:
+            todo
+        MYSQL_USER: todo
+        MYSQL_ALLOW_EMPTY_PASSWORD:
+            -yes
+        MYSQL_ROOT_PASSWORD: root 
