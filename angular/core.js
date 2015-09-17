@@ -4,11 +4,15 @@ angular.module('mainApp', ['todoController', 'todoService']);
 angular.module('todoController', [])
 
 	// inject the Todo service factory into our controller
-	.controller('mainController', ['$scope','$http','Todos', function($scope, $http, Todos) {
+	.controller('mainController', ['$scope','$http', '$window' ,'Todos', function($scope, $http, $window, Todos) {
 		$scope.formData = {};
 		$scope.loading = true;
 		// each function returns a promise object 
 	    var apiBaseUrl = "localhost";
+ 		var parser = document.createElement('a');
+		parser.href = $window.location.href;
+		//Only use for docker-compose right now to launch fast
+		apiBaseUrl = parser.hostname; 
 	    var cookies = document.cookie.split(';');
 	    for (var i = 0; i < cookies.length; i++) {
 	      var cookie = cookies[i];
