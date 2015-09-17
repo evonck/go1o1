@@ -66,6 +66,8 @@ You can launch the entire application using docker by runing:
    
    $docker-machine ip/8081: api Todo
    
+  Because of the creation of the database on mysql the go api might take up to few seconds to start
+
 ## Front-End
 The fornt end of the application is set up to use localhost as the address for the api. You can modify that by setting up a cookie api_override to define the address of your api.
 
