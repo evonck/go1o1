@@ -8,6 +8,7 @@ import (
     "strings"
     "net/http"
     main "evonck/todo"
+
 )
 
 var (
@@ -23,7 +24,9 @@ func init() {
     todosUrl = fmt.Sprintf("%s/todos", server.URL) 
     todosIdUrl = fmt.Sprintf("%s/todos/1", server.URL) 
     todosIdUnexistantUrl = fmt.Sprintf("%s/todos/105", server.URL) 
-    main.InitDb()
+    //Moche mais probleme pour creer interace de gorm pour faire un mock
+    main.InitDb("root:@192.168.99.100:3306/test?charset=utf8&parseTime=True")
+   // main.Gdb = gorm.Open()
 }
 
 /*****************************

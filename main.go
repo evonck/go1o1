@@ -3,16 +3,18 @@ package main
 import(
   "log"
   "net/http"
+	"github.com/codegangsta/cli"
+	"os"
 )
 
-func main() {
-	InitDb()
+func initApp(dbUrl string) {
+	InitDb(dbUrl)
  	router := NewRouter()
 	log.Fatal(http.ListenAndServe(":8081", router))
 
 }
 
-/*func main() {
+func main() {
   app := cli.NewApp()
   app.Name = "Todo"
   app.Usage = "Todo json APi in go"
@@ -20,4 +22,4 @@ func main() {
     initApp(c.Args()[0])
   }
   app.Run(os.Args)
-}*/
+}

@@ -3,18 +3,27 @@ package main
 import (
 	"encoding/json"
 	"evonck/todo/Godeps/_workspace/src/github.com/gorilla/mux"
-	"evonck/todo/Godeps/_workspace/src/github.com/jinzhu/gorm"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"evonck/todo/Godeps/_workspace/src/github.com/jinzhu/gorm"
 	"strings"
 )
 
 var (
 	Gdb gorm.DB
 )
+
+type Db interface{
+  	Create(value interface{}) *gorm.DB
+  	Find(out interface{}, where ...interface{}) *gorm.DB
+  	Where(query interface{}, args ...interface{}) *gorm.DB
+  	Save(value interface{}) *gorm.DB
+  	Delete(value interface{}, where ...interface{}) *gorm.DB
+  	AutoMigrate(values ...interface{}) *gorm.DB
+ }
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Hello World!")
