@@ -21,7 +21,8 @@ dockerize: install
 #Create the test
 test: install
 	@docker run --rm -v "$$PWD":"/srv/app/projet/${SRC_ROOT}" -w "/srv/app/projet/${SRC_ROOT}" \
-	-e MYSQL_TEST_ENV="${MYSQL_TEST_ENV}" -t todo-docker  godep go test -v ./...
+	-e MYSQL_TEST_ENV="${MYSQL_TEST_ENV}" -t todo-docker godep go test -v ./...
+	
 clean: 
 	rm -f todo
 

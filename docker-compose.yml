@@ -9,3 +9,20 @@ mysql:
         MYSQL_ALLOW_EMPTY_PASSWORD:
             -yes
         MYSQL_ROOT_PASSWORD: root 
+go:
+    image: golang
+    ports:
+        - "8081:8081"
+    links:
+        - mysql:mysql
+    volumes:
+        - .:/go/src/evonck/todo
+    command: /go/src/evonck/todo/start.sh
+angular:
+    image: nginx
+    ports:
+        - "8080:80"
+    volumes:
+        - ./angular:/usr/share/nginx/html
+#test
+#myasl migration
