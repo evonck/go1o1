@@ -27,5 +27,5 @@ ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/srv/app/g
 
 RUN go get github.com/tools/godep
 
-CMD go get && godep save  && godep go build
+CMD godep restore  && godep go build
 

@@ -38,7 +38,7 @@ Launch a docker container and run the test in SRC_ROOT in it.
 
 Example:
  ```shell
-make test SRC_ROOT=/src/evonck/todo 				MYSQL_TEST_ENV=root:@tcp([192.168.99.100]:3306)/test?	charset=utf8&parseTime=True'
+make test SRC_ROOT=/src/evonck/todo MYSQL_TEST_ENV='root:@tcp([192.168.99.100]:3306)/test?charset=utf8&parseTime=True'
 ```
 
 * Dockerize
@@ -49,7 +49,7 @@ make test SRC_ROOT=/src/evonck/todo 				MYSQL_TEST_ENV=root:@tcp([192.168.99.100
   
 Example:
 ```shell
-  make test SRC_ROOT=/src/evonck/todo MYSQL=root:@tcp([192.168.99.100]:3306)/todo?charset=utf8&parseTime=True'
+  make dockerize SRC_ROOT=/src/evonck/todo MYSQL='root:@tcp([192.168.99.100]:3306)/todo?charset=utf8&parseTime=True'
 ```
  * clean
  	

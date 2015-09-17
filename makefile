@@ -16,12 +16,12 @@ install: buildDocker
 
 dockerize: install
 	@docker run --rm -v "$$PWD":"/srv/app/projet/${SRC_ROOT}" -w "/srv/app/projet/${SRC_ROOT}" \
-	-t todo-docker ./todo ${MYSQL}
+	-p 8081:8081 -t todo-docker ./todo "${MYSQL}"
 
 #Create the test
-test: buildDocker
-	@docker run -i -v "$$PWD":"/srv/app/projet/${SRC_ROOT}" -w "/srv/app/projet/${SRC_ROOT}" \
-	-e MYSQL_TEST_ENV=${MYSQL_TEST_ENV} -t todo-docker godep go test -v ./...
+test: install
+	@docker run --rm -v "$$PWD":"/srv/app/projet/${SRC_ROOT}" -w "/srv/app/projet/${SRC_ROOT}" \
+	-e MYSQL_TEST_ENV="${MYSQL_TEST_ENV}" -t todo-docker  godep go test -v ./...
 clean: 
 	rm -f todo
 

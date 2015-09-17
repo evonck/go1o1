@@ -7,7 +7,6 @@ import (
     "testing"
     "strings"
     "net/http"
-    main "evonck/todo"
     "log"
     "os"
 
@@ -22,7 +21,7 @@ var (
 )
 
 func init() {
-    server = httptest.NewServer(main.NewRouter()) 
+    server = httptest.NewServer(NewRouter()) 
     todosUrl = fmt.Sprintf("%s/todos", server.URL) 
     todosIdUrl = fmt.Sprintf("%s/todos/1", server.URL) 
     todosIdUnexistantUrl = fmt.Sprintf("%s/todos/105", server.URL) 
@@ -30,7 +29,7 @@ func init() {
     if (strings.EqualFold(envMysqlSetting, "") ){    
         log.Fatal("No Database environnement set up as MYSQL_TEST_ENV")
     }
-    main.InitDb(envMysqlSetting)
+    InitDb(envMysqlSetting)
 }
 
 /*****************************
@@ -242,7 +241,7 @@ func TestDeleteTodos(t *testing.T) {
 
 func TestDeleteUnexistantTodos(t *testing.T) {
 
-    request, err := http.NewRequest("DELETE", todosIdUrl, nil) 
+    request, err := http.NewRequest("DELETE", todosIdUnexistantUrl, nil) 
 
     res, err := http.DefaultClient.Do(request)
 
