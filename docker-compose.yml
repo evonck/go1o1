@@ -24,5 +24,4 @@ angular:
         - "8080:80"
     volumes:
         - ./angular:/usr/share/nginx/html
-#test
-#myasl migration
+
