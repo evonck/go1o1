@@ -7,9 +7,20 @@ angular.module('todoController', [])
 	.controller('mainController', ['$scope','$http','Todos', function($scope, $http, Todos) {
 		$scope.formData = {};
 		$scope.loading = true;
+		// each function returns a promise object 
+	    var apiBaseUrl = "localhost";
+	    var cookies = document.cookie.split(';');
+	    for (var i = 0; i < cookies.length; i++) {
+	      var cookie = cookies[i];
+	      var trimmedCookie = cookie.match(/^\s*(.*)/)[1];
+	      if (trimmedCookie.indexOf("api_override" + '=') === 0) {
+	          apiBaseUrl = trimmedCookie.substring(api_override.length + 1, trimmedCookie.length);
+	          break;
+	      }
+	    }
 
 		var getTodo = function() {
-			Todos.get()
+			Todos.get(apiBaseUrl)
 			.success(function(data) {
 				$scope.todos = data;
 				$scope.loading = false;
@@ -29,7 +40,7 @@ angular.module('todoController', [])
 			if ($scope.formData.Name != undefined) {
 				$scope.loading = true;
 
-				Todos.create($scope.formData)
+				Todos.create($scope.formData, apiBaseUrl)
 					.success(function(data) {
 						$scope.loading = false;
 						$scope.formData = {}; 
@@ -42,7 +53,7 @@ angular.module('todoController', [])
 		$scope.updateTodo = function(todo) {
 			$scope.loading = true;
 			dataPut = '{"State":' + todo.State +'}';
-			Todos.update(todo.Id,dataPut)
+			Todos.update(todo.Id,dataPut,apiBaseUrl)
 				.success(function(data) {
 					$scope.loading = false;
 
@@ -53,7 +64,7 @@ angular.module('todoController', [])
 			$scope.loading = true;
 			for (var i = 0 ; i < $scope.todos.length; i++) {
 				if ($scope.todos[i].State == true) {
-					Todos.delete($scope.todos[i].Id)
+					Todos.delete($scope.todos[i].Id,apiBaseUrl)
 					.success(function(data) {
 					$scope.loading = false;
 					getTodo();
@@ -65,22 +76,22 @@ angular.module('todoController', [])
 	}]);
 
 angular.module('todoService', [])
-
 	// super simple service
 	// each function returns a promise object 
 	.factory('Todos', ['$http',function($http) {
 		return {
-			get : function() {
-				return $http.get('http://192.168.99.100:8081/todos');
+	
+			get : function(apiBaseUrl) {
+				return $http.get('http://'+apiBaseUrl+':8081/todos');
 			},
-			create : function(todoData) {
-				return $http.post('http://192.168.99.100:8081/todos', todoData);
+			create : function(todoData,apiBaseUrl) {
+				return $http.post('http://'+apiBaseUrl+':8081/todos', todoData);
 			},
-			delete : function(id) {
-				return $http.delete('http://192.168.99.100:8081/todos/' + id);
+			delete : function(id,apiBaseUrl) {
+				return $http.delete('http://'+apiBaseUrl+':8081/todos/' + id);
 			},
-			update : function(id, todoData) {
-				return $http.put('http://192.168.99.100:8081/todos/' + id, todoData);
+			update : function(id, todoData,apiBaseUrl) {
+				return $http.put('http://'+apiBaseUrl+':8081/todos/' + id, todoData);
 			}
 		}
 	}]);
