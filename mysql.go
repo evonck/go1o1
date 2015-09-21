@@ -8,7 +8,7 @@ import (
 )
 
 //InitDb initialise the connection with the databases
-var InitDb func(dbUrl string) = func(dbUrl string) {
+var InitDb = func(dbUrl string) {
 	var err error
 	Gdb, err = gorm.Open("mysql", dbUrl)
 	if err != nil {
