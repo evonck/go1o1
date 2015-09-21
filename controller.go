@@ -2,9 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -13,24 +13,16 @@ import (
 )
 
 var (
+	//Gorm databases
 	Gdb gorm.DB
 )
 
-type Db interface {
-	Create(value interface{}) *gorm.DB
-	Find(out interface{}, where ...interface{}) *gorm.DB
-	Where(query interface{}, args ...interface{}) *gorm.DB
-	Save(value interface{}) *gorm.DB
-	Delete(value interface{}, where ...interface{}) *gorm.DB
-	AutoMigrate(values ...interface{}) *gorm.DB
-}
-
-//Say Hello world :)
+//Index:Say Hello world :)
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Hello World!")
 }
 
-//Set Header for the front to allow cross platform origin
+//SetHeader: Set Header for the front to allow cross platform origin
 func SetHeader(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 	(*w).Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -38,13 +30,13 @@ func SetHeader(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS, DELETE")
 }
 
-//Allow acces to the OPTION url
+//AllowAcces: Allow acces to the OPTION url
 func AllowAcces(w http.ResponseWriter, r *http.Request) {
 	SetHeader(&w)
 	w.WriteHeader(http.StatusOK)
 }
 
-//Send the list of Todo in the database
+//TodoShow: Send the list of Todo in the database
 func TodoShow(w http.ResponseWriter, r *http.Request) {
 	var todos []Todo
 	err := Gdb.Find(&todos).Error
@@ -59,10 +51,10 @@ func TodoShow(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//Create a Todo and store it to the database
+//TodoCreate: Create a Todo and store it to the database
 func TodoCreate(w http.ResponseWriter, r *http.Request) {
 	SetHeader(&w)
-	todo, err := DecodeJson(r)
+	todo, err := DecodeJSON(r)
 	if err != nil {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		fmt.Fprintln(w, "Your Json is probably malformed")
@@ -89,16 +81,16 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//Update an existing Todo
+//TodoUpdate: Update an existing Todo
 func TodoUpdate(w http.ResponseWriter, r *http.Request) {
 	var todo Todo
 	var todoUpdate Todo
 	SetHeader(&w)
 
 	vars := mux.Vars(r)
-	todoId := vars["todoId"]
+	todoID := vars["todoId"]
 	//Find the todo by Id
-	err := Gdb.Where("id = ?", todoId).Find(&todo).Error
+	err := Gdb.Where("id = ?", todoID).Find(&todo).Error
 	if err != nil {
 		//If no Todo return Not alowed
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -106,7 +98,7 @@ func TodoUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//Find the new Updated json Todo
-	todoUpdate, err = DecodeJson(r)
+	todoUpdate, err = DecodeJSON(r)
 	if err != nil {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		fmt.Fprintln(w, "Your Json is probably malformed")
@@ -133,15 +125,15 @@ func TodoUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//Delete a todo
+//TodoDelete: Delete a todo
 func TodoDelete(w http.ResponseWriter, r *http.Request) {
 	var todo Todo
 	vars := mux.Vars(r)
-	todoId := vars["todoId"]
+	todoID := vars["todoId"]
 	SetHeader(&w)
 
 	//Find  Todo by Id
-	err := Gdb.Where("id = ?", todoId).Find(&todo).Error
+	err := Gdb.Where("id = ?", todoID).Find(&todo).Error
 	if err != nil {
 		//No Id found
 		w.WriteHeader(http.StatusConflict)
@@ -160,8 +152,8 @@ func TodoDelete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-//Function that decode the Json Request to create a Todo object
-func DecodeJson(r *http.Request) (Todo, error) {
+//DecodeJSON: Function that decode the Json Request to create a Todo object
+func DecodeJSON(r *http.Request) (Todo, error) {
 	var todo Todo
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
