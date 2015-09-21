@@ -13,16 +13,16 @@ import (
 )
 
 var (
-	//Gorm databases
+	//Gdb Gorm databases
 	Gdb gorm.DB
 )
 
-//Index:Say Hello world :)
+//Index Say Hello world :)
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Hello World!")
 }
 
-//SetHeader: Set Header for the front to allow cross platform origin
+//SetHeader Set Header for the front to allow cross platform origin
 func SetHeader(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 	(*w).Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -30,13 +30,13 @@ func SetHeader(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS, DELETE")
 }
 
-//AllowAcces: Allow acces to the OPTION url
+//AllowAcces Allow acces to the OPTION url
 func AllowAcces(w http.ResponseWriter, r *http.Request) {
 	SetHeader(&w)
 	w.WriteHeader(http.StatusOK)
 }
 
-//TodoShow: Send the list of Todo in the database
+//TodoShow Send the list of Todo in the database
 func TodoShow(w http.ResponseWriter, r *http.Request) {
 	var todos []Todo
 	err := Gdb.Find(&todos).Error
@@ -51,7 +51,7 @@ func TodoShow(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//TodoCreate: Create a Todo and store it to the database
+//TodoCreate Create a Todo and store it to the database
 func TodoCreate(w http.ResponseWriter, r *http.Request) {
 	SetHeader(&w)
 	todo, err := DecodeJSON(r)
@@ -81,7 +81,7 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//TodoUpdate: Update an existing Todo
+//TodoUpdate Update an existing Todo
 func TodoUpdate(w http.ResponseWriter, r *http.Request) {
 	var todo Todo
 	var todoUpdate Todo
@@ -125,7 +125,7 @@ func TodoUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//TodoDelete: Delete a todo
+//TodoDelete Delete a todo
 func TodoDelete(w http.ResponseWriter, r *http.Request) {
 	var todo Todo
 	vars := mux.Vars(r)
@@ -152,7 +152,7 @@ func TodoDelete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-//DecodeJSON: Function that decode the Json Request to create a Todo object
+//DecodeJSON Function that decode the Json Request to create a Todo object
 func DecodeJSON(r *http.Request) (Todo, error) {
 	var todo Todo
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
