@@ -57,7 +57,7 @@ angular.module('todoController', [])
 		$scope.updateTodo = function(todo) {
 			$scope.loading = true;
 			dataPut = '{"State":' + todo.State +'}';
-			Todos.update(todo.Id,dataPut,apiBaseUrl)
+			Todos.update(todo.ID,dataPut,apiBaseUrl)
 				.success(function(data) {
 					$scope.loading = false;
 
@@ -68,7 +68,7 @@ angular.module('todoController', [])
 			$scope.loading = true;
 			for (var i = 0 ; i < $scope.todos.length; i++) {
 				if ($scope.todos[i].State == true) {
-					Todos.delete($scope.todos[i].Id,apiBaseUrl)
+					Todos.delete($scope.todos[i].ID,apiBaseUrl)
 					.success(function(data) {
 					$scope.loading = false;
 					getTodo();

@@ -7,6 +7,7 @@ import (
 	"log"
 )
 
+//InitDb initialise the connection with the databases
 var InitDb func(dbUrl string) = func(dbUrl string) {
 	var err error
 	Gdb, err = gorm.Open("mysql", dbUrl)

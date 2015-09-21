@@ -2,7 +2,7 @@
 #Update mysl create use and database
 
 #let mysql some time to create the databases
-sleep 3
+sleep 4
 #grab the godep library
 go get github.com/tools/godep
 #install the binary

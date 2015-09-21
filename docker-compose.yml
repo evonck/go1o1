@@ -3,11 +3,9 @@ mysql:
     ports:
         - "3306:3306"
     environment:
-        MYSQL_DATABASE:
-            todo
+        MYSQL_DATABASE: todo
         MYSQL_USER: todo
-        MYSQL_ALLOW_EMPTY_PASSWORD:
-            -yes
+        MYSQL_PASSWORD: todo
         MYSQL_ROOT_PASSWORD: root 
 go:
     image: golang

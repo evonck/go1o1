@@ -7,8 +7,8 @@ import (
 	"os"
 )
 
-func initApp(dbUrl string) {
-	InitDb(dbUrl)
+func initApp(dbURL string) {
+	InitDb(dbURL)
 	router := NewRouter()
 	log.Fatal(http.ListenAndServe(":8081", router))
 

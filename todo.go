@@ -1,10 +1,11 @@
 package main
 
+//Todo represent a todo task
 type Todo struct {
-	Id        int 	`gorm:"primary_key"`
-	Name 			string 	
+	ID    int `gorm:"primary_key"`
+	Name  string
 	State bool
 }
 
-
+//Todos slice of Todo
 type Todos []Todo
